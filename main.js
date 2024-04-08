@@ -1,11 +1,14 @@
 const init = async () => {
     let data = await getCharacters();
     showCharacters(data.results);
-    
+    refreshPag();
+    changePag();
 };
 
-const getCharacters = async () => {
-    let characters = await fetch('https://rickandmortyapi.com/api/character');
+const getCharacters = async (url = 'https://rickandmortyapi.com/api/character', page = 1) => {
+    let currentPage$ = document.querySelector('#current');
+    currentPage$.textContent = page;
+    let characters = await fetch(url);
     let data = await characters.json();
     return data;
 };
@@ -32,8 +35,45 @@ const showCharacters = (data) => {
 
 };
 
+const refreshPag = (info) => {
+    let currentPage$ = document.querySelector('#current');
+    let currentPage = parseInt(currentPage$.textContent);
 
+    let prevBtn$ = document.querySelector('#prevPag');
+    let nextBtn = document.querySelector('#nextPag');
+    if(info){ 
+        if (info.prev === null){
+            prevBtn$.removeAttribute('data-goToPage')
+        } else{
+            prevBtn$.attributes.removeAttribute('disabled');
+            prevBtn$.setAttribute('data-url', info.prev);
+            prevBtn$.setAttribute('data-goToPage', currentPage -1);
+        };
+        
+        if (info.next === null){
+            nextBtn$.removeAttribute('data-goToPage')
+        } else{
+            nextBtn$.attributes.removeAttribute('disabled');
+            nextBtn$.setAttribute('data-url', info.next);
+            nextBtn$.setAttribute('data-goToPage', currentPage +1);
+        };
+    };   
+};
 
+const changePag = () => {
+    let prevBtn$ = document.querySelector('#prevPag');
+    let nextBtn$ = document.querySelector('#nextPag');
+    prevBtn$.addEventListener('click', goToPage);
+    nextBtn$.addEventListener('click', goToPage);
+    
+
+}
+
+function goToPage() {
+    let url = this.getAttribute('data-url');
+    let newPage = this.getAttribute('data-goToPage');
+    console.log(url, newPage);
+}
 
 
 
