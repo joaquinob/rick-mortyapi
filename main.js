@@ -12,7 +12,6 @@ const getCharacters = async (url = 'https://rickandmortyapi.com/api/character', 
     
     let characters = await fetch(url);
     let data = await characters.json();
-    console.log(characters);
     return data;
 };
 
@@ -74,10 +73,12 @@ const changePag = () => {
 
 }
 
-function goToPage() {
+async function goToPage() {
     let newUrl = this.getAttribute('data-url');
     let newPage = this.getAttribute('data-goToPage');
-    getCharacters(newUrl, newPage);
+    let data = await getCharacters(newUrl, newPage);
+    showCharacters(data.results);
+    refreshPag(data.info);
     console.log(newUrl);
     console.log(newPage);
 };
