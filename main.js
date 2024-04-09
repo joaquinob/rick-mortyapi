@@ -52,7 +52,6 @@ const refreshPag = (info) => {
     let prevBtn$ = document.querySelector('#prevPag');
     if(info){ 
         if (info.prev === null){
-            prevBtn$.setAttribute('disabled')
             prevBtn$.removeAttribute('data-goToPage')
         } else{
             prevBtn$.removeAttribute('disabled');
@@ -64,7 +63,6 @@ const refreshPag = (info) => {
     
     if(info){
         if (info.next === null){
-            nextBtn$.setAttribute('disabled')
             nextBtn$.removeAttribute('data-goToPage')
         } else{
             nextBtn$.removeAttribute('disabled');
