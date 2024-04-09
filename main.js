@@ -42,28 +42,30 @@ const showCharacters = (data) => {
 const refreshPag = (info) => {
     let currentPage$ = document.querySelector('#current');
     let currentPage = parseInt(currentPage$.textContent);
-
+    let nextBtn$ = document.querySelector('#nextPag');
     let prevBtn$ = document.querySelector('#prevPag');
+
     if(info){ 
-        if (info.prev === null){
-            prevBtn$.removeAttribute('data-goToPage')
-        } else{
+        if (info.prev === null && info.prev === 'https://rickandmortyapi.com/api/character?page=1'){
+            prevBtn$.removeAttribute('data-goToPage');
+            prevBtn$.setAttribute('disabled');
+        };
+        if (info.prev){
             prevBtn$.removeAttribute('disabled');
             prevBtn$.setAttribute('data-url', info.prev);
             prevBtn$.setAttribute('data-goToPage', currentPage -1);
         };
-    };
-    let nextBtn$ = document.querySelector('#nextPag');
-    
-    if(info){
-        if (info.next === null){
-            nextBtn$.removeAttribute('data-goToPage')
-        } else{
+        if (info.next === null && info.next === 'https://rickandmortyapi.com/api/character?page=42'){
+            nextBtn$.removeAttribute('data-goToPage');
+            nextBtn$.setAttribute('disabled');
+        };
+        if (info.next){
             nextBtn$.removeAttribute('disabled');
             nextBtn$.setAttribute('data-url', info.next);
             nextBtn$.setAttribute('data-goToPage', currentPage +1);
         }; };
-    
+        console.log(nextBtn$);
+        console.log(prevBtn$)
 };
 
 const changePag = () => {
