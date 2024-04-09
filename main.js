@@ -17,6 +17,7 @@ const getCharacters = async (url = 'https://rickandmortyapi.com/api/character', 
 
 const showCharacters = (data) => {
     let main$ = document.querySelector('main');
+    main$.innerHTML='';
 
     for (let character of data){
         let characters$ = document.createElement('div');
@@ -36,13 +37,6 @@ const showCharacters = (data) => {
         
 }
 
-};
-
-const deleteCharacters = () => {
-    for (let i = 0; i < 20; i++){
-        let characters$ = document.querySelector('.flexbox');
-        characters$.remove();
-    }
 };
 
 const refreshPag = (info) => {
@@ -87,7 +81,6 @@ async function goToPage() {
     let data = await getCharacters(newUrl, newPage);
     showCharacters(data.results);
     refreshPag(data.info);
-    deleteCharacters();
     console.log(newUrl);
     console.log(newPage);
 };
